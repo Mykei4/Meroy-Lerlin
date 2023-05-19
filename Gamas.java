@@ -250,12 +250,11 @@ public class Gamas extends javax.swing.JFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         try{
-                String sql = "INSERT INTO gama_producto VALUES (?, ?)";
-                PreparedStatement sentencia = conBD.prepareStatement(sql);
+            String sql = "INSERT INTO gama_producto VALUES (?, ?)";
+            PreparedStatement sentencia = conBD.prepareStatement(sql);
                
-                sentencia.setString(1, (jTextFieldGama.getText()));
-                sentencia.setString(2, (jTextFieldTexto.getText()));
-                
+            sentencia.setString(1, (jTextFieldGama.getText()));
+            sentencia.setString(2, (jTextFieldTexto.getText()));
                 
                 sentencia.executeUpdate();
                 sentencia.close();
@@ -287,7 +286,7 @@ public class Gamas extends javax.swing.JFrame {
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         try {
-            String sql = "SELECT gama FROM gama_producto WHERE gama LIKE ?" ;
+            String sql = "SELECT * FROM gama_producto WHERE gama LIKE ?" ;
            
             PreparedStatement stmt = conBD.prepareStatement(sql);
             
@@ -298,8 +297,6 @@ public class Gamas extends javax.swing.JFrame {
             if (rs.next()) {
                 jTextFieldGama.setText(rs.getString(1));
                 jTextFieldTexto.setText(rs.getString(2));
-            } else {
-                JOptionPane.showMessageDialog(this, "No existe", "Error", JOptionPane.ERROR_MESSAGE);
             }
             
             rs.close();
