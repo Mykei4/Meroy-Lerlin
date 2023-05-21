@@ -2,17 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -496,61 +493,15 @@ public class Productos extends javax.swing.JFrame {
 
     private void jButtonListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListadoActionPerformed
         Listado abrir = new Listado() ;
-        abrir.setVisible(true) ;   
+        abrir.setVisible(true) ;
+        this.setVisible(false);
+        
     }//GEN-LAST:event_jButtonListadoActionPerformed
 
     private void jButtonInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInformeActionPerformed
-        String nombre = "";
-        float stock, venta, prove, margen, totalv, totalp;
-        stock = venta = prove = margen = 0 ;
-        try {
-            String sql = "SELECT nombre, cantidad_en_stock, precio_venta, precio_proveedor FROM producto WHERE codigo_producto LIKE ?" ;
-
-            PreparedStatement stmt;
-            stmt = conBD.prepareStatement(sql);
-            
-            stmt.setString(1, String.valueOf(JOptionPane.showInputDialog("Introduce el codigo del producto")));
-            
-            ResultSet rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                nombre = rs.getString(1);
-                stock = rs.getFloat(2);
-                venta = rs.getFloat(3);
-                prove = rs.getFloat(4);
-            }
-            
-            totalp = stock * prove ;
-            totalv = stock * venta ;
-            margen = totalv - totalp ;
-            
-            rs.close();
-            stmt.close();
-            conBD.close();
-                  
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "No existe", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        JOptionPane.showMessageDialog(this, "El margen de beneficio del producto " + nombre + " es: " + margen);
-        int option = JOptionPane.showConfirmDialog(this, "¿Deseas guardar el contenido en un archivo txt?");
-        if (option == 0) {
-            try {
-                String informe = "El margen de beneficio es de: " + margen ;
-                int result = jFileChooser.showOpenDialog(null);
-                if (result == jFileChooser.APPROVE_OPTION){
-                    String archivo = jFileChooser.getSelectedFile().getAbsolutePath();
-                    File carpeta = new File(archivo + ".txt") ;    
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(carpeta));
-                    bw.write(informe);
-                    bw.close() ;
-                }
-                JOptionPane.showMessageDialog(this, "Informe generado exitosamente");
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "No se ha podido generar el informe", "ERROR", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        else 
-            JOptionPane.showMessageDialog(this, "Archivo no creado");
+        Informe abrir = new Informe();
+        abrir.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonInformeActionPerformed
 
     /**
